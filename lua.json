@@ -1,0 +1,162 @@
+{
+  "GlobalRealtime": {
+    "prefix": "globals.realtime",
+    "body": "globals.realtime()",
+    "description": "Returns the local time in seconds."
+  },
+  "GlobalCurtime": {
+    "prefix": "globals.curtime",
+    "body": "globals.curtime()",
+    "description": "Returns the game time in seconds. This number is synchronized with the server."
+  },
+  "GlobalMaxPlayers": {
+    "prefix": "globals.maxplayers",
+    "body": "globals.maxplayers()",
+    "description": "Returns the maximum number of players in the server."
+  },
+  "GlobalTickCount": {
+    "prefix": "globals.tickcount",
+    "body": "globals.tickcount()",
+    "description": "Returns the number of ticks elapsed in the server."
+  },
+  "GlobalTickInterval": {
+    "prefix": "globals.tickinterval",
+    "body": "globals.tickinterval()",
+    "description": "Returns the time elapsed in one game tick in seconds."
+  },
+  "GlobalMapName": {
+    "prefix": "globals.mapname",
+    "body": "globals.mapname()",
+    "description": "Returns the name of the loaded map, or nil if you are not in game."
+  },
+  "ClientSetEventCallback": {
+    "prefix": "client.set_event_callback",
+    "body": "client.set_event_callback(${1:event_name}, ${2:callback_function})",
+    "description": "syntax: client.set_event_callback(event_name, callback)\nevent_name - Name of the event.\ncallback - Lua function to call when this event occurs.\nReturns nil, or an error string on failure."
+  },
+  "ClientLog": {
+    "prefix": "client.log",
+    "body": "client.log(${1:console_msg})",
+    "description": "syntax: client.log(msg, ...)\nmsg - The message\n... - Optional args to concatenate with msg."
+  },
+  "ClientExec": {
+    "prefix": "client.exec",
+    "body": "client.exec(${1:cmd})",
+    "description": "syntax: client.exec(cmd, ...)\ncmd - The console command(s) to execute.\n... - Optional args to concatenate with cmd."
+  },
+  "ClientUserIDToEntIndex": {
+    "prefix": "client.userid_to_entindex",
+    "body": "client.userid_to_entindex(${1:userid})",
+    "description": "syntax: client.userid_to_entindex(userid)\nuserid - This is given by some game events.\nReturns the entity index, or 0 on failure."
+  },
+  "ClientGetCvar": {
+    "prefix": "client.get_cvar",
+    "body": "client.get_cvar(${1:cvar_name})",
+    "description": "syntax: client.get_cvar(cvar_name)\ncvar_name - The name of the console variable.\nReturns a string representing the current value of the convar, or nil on failure."
+  },
+  "ClientDrawDebugText": {
+    "prefix": "client.draw_debug_text",
+    "body": "client.draw_debug_text(${1:x}, ${2:y}, ${3:z}, ${4:line_offset}, ${5:duration}, ${6:r}, ${7:g}, ${8:b}, ${9:a}, ${10:...})",
+    "description": "syntax: client.draw_debug_text(x, y, z, line_offset, duration, r, g, b, a, ...)\nx - Position in world space\ny - Position in world space\nz - Position in world space\nline_offset - Used for vertical alignment, use 0 for the first line.\nduration - Time in seconds that the text will remain on the screen.\nr - Red (1-255)\ng - Green (1-255)\nb - Blue (1-255)\na - Alpha (1-255)\n... - The text that will be drawn"
+  },
+  "ClientDrawHitboxes": {
+    "prefix": "client.draw_hitboxes",
+    "body": "client.draw_hitboxes(${1:entindex}, ${2:duration}, ${3:hitboxes}, ${4:line_offset}, ${5:duration}, ${6:r}, ${7:g}, ${8:b})",
+    "description": "syntax: client.draw_hitboxes(entindex, duration, hitboxes, line_offset, duration, r, g, b)\nentindex - Entity index\nduration - Time in seconds\nhitboxes - Either the hitbox index, an array of hitbox indices, or 19 for all hitboxes\nline_offset - Used for vertical alignment, use 0 for the first line\nduration - Time in seconds that the text will remain on the screen\nr - Red (1-255)\ng - Green (1-255)\nb - Blue (1-255)"
+  },
+  "ClientRandomInt": {
+    "prefix": "client.random_int",
+    "body": "client.random_int(${1:min}, ${2:max})",
+    "description": "syntax: client.random_int(minimum, maximum)\nminimum - Lowest possible result\nmaximum - Highest possible result\nReturns a random integer between minimum and maximum."
+  },
+  "ClientRandomFloat": {
+    "prefix": "client.random_float",
+    "body": "client.random_float(${1:min}, ${2:max})",
+    "description": "syntax: client.random_float(minimum, maximum)\nminimum - Lowest possible result\nmaximum - Highest possible result\nReturns a random float between minimum and maximum."
+  },
+  "ClientDrawText": {
+    "prefix": "client.draw_text",
+    "body": "client.draw_text(${1:paint_ctx}, ${2:x}, ${3:y}, ${4:r}, ${5:g}, ${6:b}, ${7:a}, ${8:flags}, ${9:max_width}, ${10:...}, ...)",
+    "description": "syntax: client.draw_text(paint_ctx, x, y, r, g, b, a, flags, max_width, ..., ...)\npaint_ctx - The context passed to your 'paint' event callback\nx - Screen coordinate\ny - Screen coordinate\nr - Red (1-255)\ng - Green (1-255)\nb - Blue (1-255)\na - Alpha (1-255)\nflags - \"+\" for large text, \"-\" for small text, \"c\" for centered text. \"c\" can be combined with other flags. \"nil\" can be used for normal sized uncentered text\nmax_width - Text will be clipped if it exceeds this width in pixels\n... - Text that will be drawn\n... - Optional"
+  },
+  "ClientDrawRectangle": {
+    "prefix": "client.draw_rectangle",
+    "body": "client.draw_rectangle(${1:paint_ctx}, ${2:x}, ${3:y}, ${4:w}, ${5:h}, ${6:r}, ${7:g}, ${8:b}, ${9:a})",
+    "description": "syntax: client.draw_rectangle(paint_ctx, x, y, w, h, r, g, b, a)\npaint_ctx - The context passed to your 'paint' event callback\nx - Screen coordinate\ny - Screen coordinate\nw - Width in pixels\nh - Height in pixels\nr - Red (1-255)\ng - Green (1-255)\nb - Blue (1-255)\na - Alpha (1-255)"
+  },
+  "ClientDrawLine": {
+    "prefix": "client.draw_line",
+    "body": "client.draw_line(${1:paint_ctx}, ${2:xa}, ${3:ya}, ${4:xb}, ${5:yb}, ${6:r}, ${7:g}, ${8:b}, ${9:a})",
+    "description": "syntax: client.draw_line(paint_ctx, xa, ya, xb, yb, r, g, b, a)\npaint_ctx - The context passed to your 'paint' event callback\nxa - Screen coordinate of point A\nya - Screen coordinate of point A\nxb - Screen coordinate of point B\nyb - Screen coordinate of point B\nr - Red (1-255)\ng - Green (1-255)\nb - Blue (1-255)\na - Alpha (1-255)"
+  },
+  "ClientWorldToScreen": {
+    "prefix": "client.world_to_screen",
+    "body": "client.world_to_screen(${1:paint_ctx}, ${2:x}, ${3:y}, ${4:z})",
+    "description": "syntax: client.world_to_screen(paint_ctx, x, y, z)\npaint_ctx - The context passed to your 'paint' event callback\nx - Position in world space\ny - Position in world space\nz - Position in world space\nReturns screen coordinates (x, y), or nil if the world position is not visible on your screen."
+  },
+  "UINewCheckbox": {
+    "prefix": "ui.new_checkbox",
+    "body": "ui.new_checkbox($1:tab}, ${2:container}, ${3:name})",
+    "description": "syntax: ui.new_checkbox(tab, container, name)\ntab - The name of the tab: AA, RAGE, LEGIT, MISC, PLAYERS, SKINS, or VIS.\ncontainer - The name of the existing container to which this checkbox will be added.\nname - The name of the checkbox.\nReturns a special variable that can be passed to 'ui.get' and 'ui.set', or nil on failure."
+  },
+  "UINewSlider": {
+    "prefix": "ui.new_slider",
+    "body": "ui.new_slider(${1:tab}, ${2:container}, ${3:name}, ${4:min}, ${5:max})",
+    "description": "syntax: ui.new_slider(tab, container, name, min, max)\ntab - The name of the tab: AA, RAGE, LEGIT, MISC, PLAYERS, SKINS, or VIS.\ncontainer - The name of the existing container to which this checkbox will be added.\nname - The name of the slider.\nmin - The minimum value that can be set using the slider.\nmax - The maximum value that can be set using the slider.\nReturns a special variable that can be passed to 'ui.get' and 'ui.set', or nil on failure."
+  },
+  "UINewButton": {
+    "prefix": "ui.new_button",
+    "body": "ui.new_button(${1:tab}, ${2:container}, ${3:name}, ${4:callback})",
+    "description": "syntax: ui.new_button(tab, container, name, callback)\ntab - The name of the tab: AA, RAGE, LEGIT, MISC, PLAYERS, SKINS, or VIS.\ncontainer - The name of the existing container to which this checkbox will be added.\nname - The name of the button.\ncallback - The lua function that will be called when the button is pressed.\nReturns nil on failure."
+  },
+  "UISet": {
+    "prefix": "ui.set",
+    "body": "ui.set(${1:name}, ${2:value})",
+    "description": "syntax: ui.set(item, value)\nitem - The result of either new_checkbox or new_slider.\nvalue - true or false for a checkbox, or an integer for a slider. Do not pass an integer that is outside of a slider's minimum/maximum value."
+  },
+  "UIGet": {
+    "prefix": "ui.get",
+    "body": "ui.get(${1:item})",
+    "description": "syntax: ui.get(item)\nitem - The result of either new_checkbox or new_slider.\nReturns true or false for a checkbox, or an integer for a slider."
+  },
+  "EntityGetLocalPlayer": {
+    "prefix": "entity.get_local_player",
+    "body": "entity.get_local_player()",
+    "description": "syntax: entity.get_local_player()\nReturns the entity index for the local player, or nil on failure."
+  },
+  "EntityGetAll": {
+    "prefix": "entity.get_all",
+    "body": "entity.get_all(${1:classname})",
+    "description": "syntax: entity.get_all(classname)\nclassname - Optional. If provided, only entities of this type are added to the list.\nReturns an array of entity indices, or nil on failure."
+  },
+  "EntityGetPlayers": {
+    "prefix": "entity.get_players",
+    "body": "entity.get_players(${1:enemies_only})",
+    "description": "syntax: entity.get_players(enemies_only)\nenemies_only - Optional. If provided, you and the players on your team will not be added to the list.\nReturns an array of player entity indices, or nil on failure."
+  },
+  "EntityGetClassName": {
+    "prefix": "entity.get_classname",
+    "body": "entity.get_classname(${1:ent})",
+    "description": "syntax: entity.get_classname(ent)\nent - Entity index.\nReturns the name of the entity's class, or nil on failure."
+  },
+  "EntitySetProp": {
+    "prefix": "entity.set_prop",
+    "body": "entity.set_prop(${1:ent}, ${2:propname}, ${3:value})",
+    "description": "syntax: entity.set_prop(ent, propname, value)\nent - Entity index.\npropname - Name of the networked property.\nvalue - The property will be set to this value. For vectors or angles, separate the components by commas."
+  },
+  "EntityGetProp": {
+    "prefix": "entity.get_prop",
+    "body": "entity.get_prop(${1:ent}, ${2:propname}",
+    "description": "syntax: entity.get_prop(ent, propname)\nent - Entity index.\npropname - Name of the networked property.\nReturns the value of the property, or nil on failure."
+  },
+  "EntityIsEnemy": {
+    "prefix": "entity.is_enemy",
+    "body": "entity.is_enemy(${1:ent})",
+    "description": "syntax: entity.is_enemy(ent)\nent - Entity index.\nReturns true if the entity is on the other team."
+  },
+  "EntityGetPlayerName": {
+    "prefix": "entity.get_player_name",
+    "body": "entity.get_player_name(${1:ent})",
+    "description": "syntax: entity.get_player_name(ent)\nent - Entity index.\nReturns the player's name, or nil on failure."
+  }
+}
