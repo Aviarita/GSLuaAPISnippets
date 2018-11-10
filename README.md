@@ -1,4 +1,4 @@
-# GSLuaSnippets (Last Updated: 9/06/2018)
+# GSLuaSnippets (Last Updated: 10/11/2018)
 
 Snippets for the GSLuaAPI in JSON format. This was primarily made for VSCode.
 
