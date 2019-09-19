@@ -102,7 +102,7 @@
   "ClientDrawText": {
     "prefix": "client.draw_text",
     "body": "client.draw_text(${1:paint_ctx}, ${2:x}, ${3:y}, ${4:r}, ${5:g}, ${6:b}, ${7:a}, ${8:flags}, ${9:max_width}, ${10:...}, ...)",
-    "description": "syntax: client.draw_text(paint_ctx, x, y, r, g, b, a, flags, max_width, ..., ...)\npaint_ctx - The context passed to your 'paint' event callback\nx - Screen coordinate\ny - Screen coordinate\nr - Red (1-255)\ng - Green (1-255)\nb - Blue (1-255)\na - Alpha (1-255)\nflags - \"+\" for large text, \"-\" for small text, \"c\" for centered text. \"c\" can be combined with other flags. \"nil\" can be used for normal sized uncentered text\nmax_width - Text will be clipped if it exceeds this width in pixels\n... - Text that will be drawn\n... - Optional"
+    "description": "syntax: client.draw_text(paint_ctx, x, y, r, g, b, a, flags, max_width, ..., ...)\npaint_ctx - The context passed to your 'paint' event callback\nx - Screen coordinate\ny - Screen coordinate\nr - Red (1-255)\ng - Green (1-255)\nb - Blue (1-255)\na - Alpha (1-255)\nflags - \"+\" for large text, \"-\" for small text, \"c\" for centered text. \"c\" can be combined with other flags. \"nil\" can be used for normal sized uncentered text\nmax_width - Text will be clipped if it ex2eeds this width in pixels\n... - Text that will be drawn\n... - Optional"
   },
   "ClientDrawRectangle": {
     "prefix": "client.draw_rectangle",
@@ -111,8 +111,8 @@
   },
   "ClientDrawLine": {
     "prefix": "client.draw_line",
-    "body": "client.draw_line(${1:paint_ctx}, ${2:xa}, ${3:ya}, ${4:xb}, ${5:yb}, ${6:r}, ${7:g}, ${8:b}, ${9:a})",
-    "description": "syntax: client.draw_line(paint_ctx, xa, ya, xb, yb, r, g, b, a)\npaint_ctx - The context passed to your 'paint' event callback\nxa - Screen coordinate of point A\nya - Screen coordinate of point A\nxb - Screen coordinate of point B\nyb - Screen coordinate of point B\nr - Red (1-255)\ng - Green (1-255)\nb - Blue (1-255)\na - Alpha (1-255)"
+    "body": "client.draw_line(${1:paint_ctx}, ${2:x0}, ${3:y0}, ${4:x1}, ${5:y1}, ${6:r}, ${7:g}, ${8:b}, ${9:a})",
+    "description": "syntax: client.draw_line(paint_ctx, x0, y0, x1, y1, r, g, b, a)\npaint_ctx - The context passed to your 'paint' event callback\nx0 - Screen coordinate of point A\ny0 - Screen coordinate of point A\nx1 - Screen coordinate of point B\ny1 - Screen coordinate of point B\nr - Red (1-255)\ng - Green (1-255)\nb - Blue (1-255)\na - Alpha (1-255)"
   },
   "ClientDrawGradient": {
     "prefix": "client.draw_gradient",
@@ -144,7 +144,12 @@
     "body": "client.screen_size()",
     "description": "syntax: client.screen_size()\nReturns (width, height)."
   },
-  "ClientCameraAngles": {
+  "ClientSetCameraAngles": {
+    "prefix": "client.camera_angles",
+    "body": "client.camera_angles(${1:pitch}, (${2:yaw})",
+    "description": "syntax: client.camera_angles(pitch, yaw)\npitch - Pitch\nyaw - Yaw\nSet camera angles"
+  },
+  "ClientGetCameraAngles": {
     "prefix": "client.camera_angles",
     "body": "client.camera_angles()",
     "description": "syntax: client.camera_angles()\nReturns pitch, yaw, roll of where you are looking."
@@ -157,32 +162,94 @@
   "ClientVisible": {
     "prefix": "client.visible",
     "body": "client.visible(${1:x}, ${2:y}, ${3:z})",
-    "description": "syntax: client.visible(x, y, z)\nx - Position in world space\ny - Position in world space\nz - Position in world space\nReturns true if the position is visible. For example, you could use a player's origin to see if they are visible."
+    "description": "syntax: client.visible(x, y, z)\nx - Position in world space\ny - Position in world space\nz - Position in world space\nReturns true if the position is visible. For ex0mple, you could use a player's origin to see if they are visible."
   },
   "ClientTraceLine": {
     "prefix": "client.trace_line",
     "body": "client.trace_line(${1:skip_entindex}, ${2:from_x}, ${3:from_y}, ${4:from_z}, ${5:to_x}, ${6:to_y}, ${7:to_z})",
     "description": "syntax: client.trace_line(skip_entindex, from_x, from_y, from_z, to_x, to_y, to_z)\nskip_entindex - Ignore this entity while tracing\nfrom_x - Position in world space\nfrom_y - Position in world space\nfrom_z - Position in world space\nto_x - Position in world space\nto_y - Position in world space\nto_z - Position in world space."
   },
-  "ClientDelayCall": {
+  "ClientTraceBullet": {
+    "prefix": "client.trace_bullet",
+    "body": "client.trace_bullet(${1:from_player}, ${2:from_x}, ${3:from_y}, ${4:from_z}, ${5:to_x}, ${6:to_y}, ${7:to_z})",
+    "description": "syntax: client.trace_bullet(from_player, from_x, from_y, from_z, to_x, to_y, to_z)\nfrom_player Entity index of the player whose weapon will be used for this trace\nfrom_x Position in world space\nfrom_y Position in world space\nfrom_z Position in world space\nto_x Position in world space\nto_y Position in world space\nto_z Position in world space\nReturns `entindex, damage`. Entindex is `nil` when no player is hit."
+  },
+  "ClientDelay2all": {
     "prefix": "client.delay_call",
     "body": "client.delay_call(${1:delay}, ${2:callback}, ${3:...})",
     "description": "syntax: client.delay_call(delay, callback, ...)\ndelay - Time in seconds to wait before calling callback.\ncallback - The lua function that will be called after delay seconds.\n... - Optional arguments that will be passed to the callback."
+  },
+  "ClientScaleDamage": {
+    "prefix": "client.scale_damage",
+    "body": "client.scale_damage(${1:entindex}, ${2:hitgroup}, ${3:damage})",
+    "description": "syntax: client.scale_damage(entindex, hitgroup, damage)  \nentindex - Player entity index\nhitgroup - Hit group index\ndamage - Damage\nReturns adjusted damage for the specified hitgroup."
   },
   "ClientSetClanTag": {
     "prefix": "client.set_clan_tag",
     "body": "client.set_clan_tag(${1:string})",
     "description": "syntax: client.set_clan_tag(string).\nstring - A string you want to use as your clantag."
   },
+  "ClientCreateInterface": {
+    "prefix": "client.create_interface",
+    "body": "client.create_interface(${1:interface_dll}, ${2:interface_name})",
+    "description": "syntax: client.create_interface(interface_dll, interface_name).\ninterface_dll - The dll containing the interface.\ninterface_name - The name of the interface"
+  },
+  "ClientFindSignature": {
+    "prefix": "client.find_signature",
+    "body": "client.find_signature(${1:module}, ${2:signature})",
+    "description": "syntax: client.find_signature(module, signature).\nmodule - The dll containing the signature.\nsignature - The signature itself"
+  },
+  "ClientKeyState": {
+    "prefix": "client.key_state",
+    "body": "client.key_state(${1:virtual_key_code})",
+    "description": "syntax: client.key_state(virtual_key_code).\nvirtual_key_code - Virtual key code of the button.."
+  },
+  "ClientReloadActiveScripts": {
+    "prefix": "client.reload_active_scripts",
+    "body": "client.reload_active_scripts()",
+    "description": "syntax: client.reload_active_scripts()\nReloads all scripts the following frame."
+  },
+
+  "Custom_ClientOpenFile": {
+    "prefix": "client.open_file",
+    "body": "client.open_file(${1:filename}, ${2:pathid})",
+    "description": "syntax: client.open_file(filename, pathid)\nfilename - name of the file you want to open\npath id - pathid of the path where the file will be created/opened in/from\nReturns a table of functions."
+  },
+  "FileRead": {
+    "prefix": "file:read",
+    "body": "file:read()",
+    "description": "syntax: file:read()\nReturns the content of the file."
+  },
+  "FileWrite": {
+    "prefix": "file:write",
+    "body": "file:write(${1:text})",
+    "description": "syntax: file:write(text)\ntext you want to write to the text\nWrites the given text ot the file."
+  },
+  "FileClear": {
+    "prefix": "file:clear",
+    "body": "file:clear()",
+    "description": "syntax: file:clear()\nClears the file."
+  },
+  "FileClose": {
+    "prefix": "file:close",
+    "body": "file:close()",
+    "description": "syntax: file:close()\nCloses the file."
+  },
+
   "UINewCheckbox": {
     "prefix": "ui.new_checkbox",
     "body": "ui.new_checkbox(${1:tab}, ${2:container}, ${3:name})",
     "description": "syntax: ui.new_checkbox(tab, container, name)\ntab - The name of the tab: AA, RAGE, LEGIT, MISC, PLAYERS, SKINS, or VIS.\ncontainer - The name of the existing container to which this checkbox will be added.\nname - The name of the checkbox.\nReturns a special variable that can be passed to 'ui.get' and 'ui.set', or nil on failure."
   },
+  "UINewTextbox": {
+    "prefix": "ui.new_textbox",
+    "body": "ui.new_textbox(${1:tab}, ${2:container}, ${3:name})",
+    "description": "syntax: ui.new_textbox(tab, container, name)\ntab - The name of the tab: AA, RAGE, LEGIT, MISC, PLAYERS, SKINS, or VIS.\ncontainer - The name of the existing container to which this textbox will be added.\nname - The name of the textbox, will be hidden.\nReturns a special variable that can be passed to 'ui.get' and 'ui.set', or nil on failure."
+  },
   "UINewSlider": {
     "prefix": "ui.new_slider",
-    "body": "ui.new_slider(${1:tab}, ${2:container}, ${3:name}, ${4:min}, ${5:max})",
-    "description": "syntax: ui.new_slider(tab, container, name, min, max)\ntab - The name of the tab: AA, RAGE, LEGIT, MISC, PLAYERS, SKINS, or VIS.\ncontainer - The name of the existing container to which this checkbox will be added.\nname - The name of the slider.\nmin - The minimum value that can be set using the slider.\nmax - The maximum value that can be set using the slider.\nReturns a special variable that can be passed to 'ui.get' and 'ui.set', or nil on failure."
+    "body": "ui.new_slider(${1:tab}, ${2:container}, ${3:name}, ${4:min}, ${5:max}, ${6:init_value}, ${7:show_tooltip}, ${8:unit}, ${9:scale}, ${10:tooltips})",
+    "description": "syntax: ui.new_slider(tab, container, name, min, max, init_value, show_tooltip, unit, scale, tooltips)\ntab - The name of the tab: AA, RAGE, LEGIT, MISC, PLAYERS, SKINS, or VIS.\ncontainer - The name of the existing container to which this checkbox will be added.\nname - The name of the slider.\nmin - The minimum value that can be set using the slider.\nmax - The maximum value that can be set using the slider.\ninit_value - Optional integer. The initial value. If not provided, the initial value will be min.\nshow_tooltip - Optional boolean. true if the slider should display its current value.\nunit - Optional string that is two characters or less. This will be appended to the display value. For example, \"px\" for pixels or \"%\" for a percentage.\nscale - Optional The display value will be multiplied by this scale. For example, 0.1 will make a slider with the range [0-1800] show as 0.0-180.0 with one decimal place.\ntooltips - Optional table used to override the tooltip for the specified values. The key must be within min-max. The value is a string that will be shown instead of the numeric value whenever that value is selected.\nReturns a special variable that can be passed to 'ui.get' and 'ui.set', or nil on failure."
   },
   "UINewButton": {
     "prefix": "ui.new_button",
@@ -222,7 +289,7 @@
   "UIReference": {
     "prefix": "ui.reference",
     "body": "ui.reference(${1:tab}, ${2:container}, ${3:name})",
-    "description": "syntax: ui.reference(tab, container, name)\ntab - The name of the tab: AA, RAGE, LEGIT, MISC, PLAYERS, SKINS, or VISUALS.\ncontainer - The name of the existing container to which this checkbox will be added.\nname - The name of the menu item.\nAvoid calling this from inside a function. Returns a reference that can be passed to ui.get and ui.set, or throws an error on failure. This allows you to access a built-in pre-existing menu items. This function returns multiple values when the specified menu item is followed by unnamed menu items, for example a color picker or a hotkey."
+    "description": "syntax: ui.reference(tab, container, name)\ntab - The name of the tab: AA, RAGE, LEGIT, MISC, PLAYERS, SKINS, or VISUALS.\ncontainer - The name of the existing container to which this checkbox will be added.\nname - The name of the menu item.\nAvoid calling this from inside a function. Returns a reference that can be passed to ui.get and ui.set, or throws an error on failure. This allows you to access a built-in pre-existing menu items. This function returns multiple values when the specified menu item is followed by unnamed menu items, for ex0mple a color picker or a hotkey."
   },
   "UIIsMenuOpen": {
     "prefix": "ui.is_menu_open",
@@ -232,12 +299,17 @@
   "UISetCallback": {
     "prefix": "ui.set_callback",
     "body": "ui.set_callback(${1:name}, ${2:callback})",
-    "description": "syntax: ui.set_callback(item, callback)\nitem - The special value returned by ui.new_*. Do not try passing a reference to an existing menu item.\ncallback - Lua function that will be called when the menu item changes values. For example, this will be called when the user checks or unchecks a checkbox."
+    "description": "syntax: ui.set_callback(item, callback)\nitem - The special value returned by ui.new_*. Do not try passing a reference to an existing menu item.\ncallback - Lua function that will be called when the menu item changes values. For ex0mple, this will be called when the user checks or unchecks a checkbox."
   },
   "UISetVisible": {
     "prefix": "ui.set_visible",
     "body": "ui.set_visible(${1:name}, ${2:visible})",
     "description": "syntax: ui.set_visible(item, visible)  \nitem - A menu item reference.\nvisible - Boolean. Pass false to hide the control from the menu."
+  },
+  "UIMousePos": {
+    "prefix": "ui.mouse_position",
+    "body": "ui.mouse_position()",
+    "description": "syntax: ui.mouse_position()\n Returns current mouse coordinates x, y"
   },
   "EntityGetLocalPlayer": {
     "prefix": "entity.get_local_player",
@@ -248,6 +320,16 @@
     "prefix": "entity.get_all",
     "body": "entity.get_all(${1:classname})",
     "description": "syntax: entity.get_all(classname)\nclassname - Optional. If provided, only entities of this type are added to the list.\nReturns an array of entity indices, or nil on failure."
+  },
+  "EntityGetGameRules": {
+    "prefix": "entity.get_game_rules",
+    "body": "entity.get_game_rules()",
+    "description": "syntax: entity.get_game_rules()\nReturns the entity index of cgamerulesproxy, or nil on failure."
+  },
+    "EntityGetPlayerResource": {
+    "prefix": "entity.get_player_resource",
+    "body": "entity.get_player_resource()",
+    "description": "syntax: entity.get_player_resource()\nReturns the entity index of ccsplayerresource, or nil on failure."
   },
   "EntityGetPlayers": {
     "prefix": "entity.get_players",
@@ -266,7 +348,7 @@
   },
   "EntityGetProp": {
     "prefix": "entity.get_prop",
-    "body": "entity.get_prop(${1:ent}, ${2:propname}",
+    "body": "entity.get_prop(${1:ent}, ${2:propname})",
     "description": "syntax: entity.get_prop(ent, propname)\nent - Entity index.\npropname - Name of the networked property.\nReturns the value of the property, or nil on failure."
   },
   "EntityIsEnemy": {
@@ -309,44 +391,255 @@
     "body": "entity.get_bounding_box(${1:paint_ctx}, ${2:ent})",
     "description": "syntax: entity.get_bounding_box(paint_ctx, ent)\npaint_ctx - The context passed to your paint event callback\nent - Entity index.\nReturns a table with topX, topY, botX, botY and alpha(float 0.0 - 1.0)."
   },
+  "RendererMeasureText": {
+    "prefix": "renderer.measure_text",
+    "body": "renderer.measure_text(${1:flags}, ${2:text})",
+    "description": "syntax: renderer.measure_text(flags, text)\nflags - \"+\" for large text, \"-\" for small text, or nil for normal sized text.\ntext - Text that will be measured\nReturns width, height. This can only be called from the paint callback."
+  },
   "RendererDrawText": {
     "prefix": "renderer.text",
     "body": "renderer.text(${1:x}, ${2:y}, ${3:r}, ${4:g}, ${5:b}, ${6:a}, ${7:flags}, ${8:max_width}, ${9:...})",
-    "description": "syntax: renderer.text(x, y, r, g, b, a, flags, max_width, ...)\npaint_ctx - The context passed to your 'paint' event callback\nx - Screen coordinate\ny - Screen coordinate\nr - Red (1-255)\ng - Green (1-255)\nb - Blue (1-255)\na - Alpha (1-255)\nflags - \"+\" for large text, \"-\" for small text, \"c\" for centered text. \"c\" can be combined with other flags. \"nil\" can be used for normal sized uncentered text\nmax_width - Text will be clipped if it exceeds this width in pixels\n... - Text that will be drawn\n... - Optional"
+    "description": "syntax: renderer.text(x, y, r, g, b, a, flags, max_width, ...)\nx - Screen coordinate\ny - Screen coordinate\nr - Red (1-255)\ng - Green (1-255)\nb - Blue (1-255)\na - Alpha (1-255)\nflags - \"+\" for large text, \"-\" for small text, \"c\" for centered text. \"c\" can be combined with other flags. \"nil\" can be used for normal sized uncentered text\nmax_width - Text will be clipped if it ex2eeds this width in pixels\n... - Text that will be drawn\n... - Optional"
   },
   "RendererDrawRectangle": {
     "prefix": "renderer.rectangle",
     "body": "renderer.rectangle(${1:x}, ${2:y}, ${3:w}, ${4:h}, ${5:r}, ${6:g}, ${7:b}, ${8:a})",
-    "description": "syntax: renderer.rectangle(x, y, w, h, r, g, b, a)\npaint_ctx - The context passed to your 'paint' event callback\nx - Screen coordinate\ny - Screen coordinate\nw - Width in pixels\nh - Height in pixels\nr - Red (1-255)\ng - Green (1-255)\nb - Blue (1-255)\na - Alpha (1-255)"
+    "description": "syntax: renderer.rectangle(x, y, w, h, r, g, b, a)\nx - Screen coordinate\ny - Screen coordinate\nw - Width in pixels\nh - Height in pixels\nr - Red (1-255)\ng - Green (1-255)\nb - Blue (1-255)\na - Alpha (1-255)"
   },
   "RendererDrawLine": {
     "prefix": "renderer.line",
-    "body": "renderer.line(${1:xa}, ${2:ya}, ${3:xb}, ${4:yb}, ${5:r}, ${6:g}, ${7:b}, ${8:a})",
-    "description": "syntax: renderer.line(xa, ya, xb, yb, r, g, b, a)\npaint_ctx - The context passed to your 'paint' event callback\nxa - Screen coordinate of point A\nya - Screen coordinate of point A\nxb - Screen coordinate of point B\nyb - Screen coordinate of point B\nr - Red (1-255)\ng - Green (1-255)\nb - Blue (1-255)\na - Alpha (1-255)"
+    "body": "renderer.line(${1:x0}, ${2:y0}, ${3:x1}, ${4:y1}, ${5:r}, ${6:g}, ${7:b}, ${8:a})",
+    "description": "syntax: renderer.line(x0, y0, x1, y1, r, g, b, a)\\nx0 - Screen coordinate of point A\ny0 - Screen coordinate of point A\nx1 - Screen coordinate of point B\ny1 - Screen coordinate of point B\nr - Red (1-255)\ng - Green (1-255)\nb - Blue (1-255)\na - Alpha (1-255)"
   },
   "RendererDrawGradient": {
     "prefix": "renderer.gradient",
     "body": "renderer.gradient(${1:x}, ${2:y}, ${3:w}, ${4:h}, ${5:r1}, ${6:g1}, ${7:b1}, ${8:a1}, ${9:r2}, ${10:g2}, ${11:b2}, ${12:a2}, ${13:ltr})",
-    "description": "syntax: renderer.gradient(x, y, w, h, r1, g1, b1, a1, r2, g2, b2, a2, ltr)\npaint_ctx - The context passed to your paint event callback\nx - Screen coordinate\ny - Screen coordinate\nw - Width in pixels\nh - Height in pixels\nr1 - Red (1-255)\ng1 - Green (1-255)\nb1 - Blue (1-255)\na1 - Alpha (1-255)\nr2 - Red (1-255)\ng2 - Green (1-255)\nb2 - Blue (1-255)\na2 - Alpha (1-255)\nltr - Left to right. Pass true for horizontal gradient, or false for vertical."
+    "description": "syntax: renderer.gradient(x, y, w, h, r1, g1, b1, a1, r2, g2, b2, a2, ltr)\nx - Screen coordinate\ny - Screen coordinate\nw - Width in pixels\nh - Height in pixels\nr1 - Red (1-255)\ng1 - Green (1-255)\nb1 - Blue (1-255)\na1 - Alpha (1-255)\nr2 - Red (1-255)\ng2 - Green (1-255)\nb2 - Blue (1-255)\na2 - Alpha (1-255)\nltr - Left to right. Pass true for horizontal gradient, or false for vertical."
   },
   "RendererDrawCircle": {
     "prefix": "renderer.circle",
     "body": "renderer.circle(${1:x}, ${2:y}, ${3:r}, ${4:g}, ${5:b}, ${6:a}, ${7:radius}, ${8:start_degrees}, ${9:percentage})",
-    "description": "syntax: renderer.circle(x, y, r, g, b, a, radius, start_degrees, percentage)\npaint_ctx - The context passed to your paint event callback\nx - Screen coordinate\ny - Screen coordinate\nr - Red (1-255)\ng - Green (1-255)\nb - Blue (1-255)\na - Alpha (1-255)\nradius - Radius of the circle in pixels.\nstart_degrees - 0 is the right side, 90 is the bottom, 180 is the left, 270 is the top.\npercentage - Must be within [0.0-1.0]. 1.0 is a full circle, 0.5 is a half circle, etc."
+    "description": "syntax: renderer.circle(x, y, r, g, b, a, radius, start_degrees, percentage)\nx - Screen coordinate\ny - Screen coordinate\nr - Red (1-255)\ng - Green (1-255)\nb - Blue (1-255)\na - Alpha (1-255)\nradius - Radius of the circle in pixels.\nstart_degrees - 0 is the right side, 90 is the bottom, 180 is the left, 270 is the top.\npercentage - Must be within [0.0-1.0]. 1.0 is a full circle, 0.5 is a half circle, etc."
   },
   "RendererDrawCircleOutline": {
     "prefix": "renderer.circle_outline",
     "body": "renderer.circle_outline(${1:x}, ${2:y}, ${3:r}, ${4:g}, ${5:b}, ${6:a}, ${7:radius}, ${8:start_degrees}, ${9:percentage}, ${10:thickness})",
-    "description": "syntax: renderer.circle_outline(x, y, r, g, b, a, radius, start_degrees, percentage, thickness)\npaint_ctx - The context passed to your paint event callback\nx - Screen coordinate\ny - Screen coordinate\nr - Red (1-255)\ng - Green (1-255)\nb - Blue (1-255)\na - Alpha (1-255)\nradius - Radius of the circle in pixels.\nstart_degrees - 0 is the right side, 90 is the bottom, 180 is the left, 270 is the top.\npercentage - Must be within [0.0-1.0]. 1.0 is a full circle, 0.5 is a half circle, etc.\nthickness - Thickness of the outline in pixels."
+    "description": "syntax: renderer.circle_outline(x, y, r, g, b, a, radius, start_degrees, percentage, thickness)\nx - Screen coordinate\ny - Screen coordinate\nr - Red (1-255)\ng - Green (1-255)\nb - Blue (1-255)\na - Alpha (1-255)\nradius - Radius of the circle in pixels.\nstart_degrees - 0 is the right side, 90 is the bottom, 180 is the left, 270 is the top.\npercentage - Must be within [0.0-1.0]. 1.0 is a full circle, 0.5 is a half circle, etc.\nthickness - Thickness of the outline in pixels."
   },
   "RendererDrawIndicator": {
     "prefix": "renderer.indicator",
     "body": "renderer.indicator(${1:r}, ${2:g}, ${3:b}, ${4:a}, ${5:...})",
-    "description": "syntax: renderer.indicator(r, g, b, a, ...)     \npaint_ctx - The context passed to your 'paint' event callback\nr - Red (1-255)\ng - Green (1-255)\nb - Blue (1-255)\na - Alpha (1-255)\n... - Text that will be drawn."
+    "description": "syntax: renderer.indicator(r, g, b, a, ...)\nr - Red (1-255)\ng - Green (1-255)\nb - Blue (1-255)\na - Alpha (1-255)\n... - Text that will be drawn."
   },
   "RendererWorldToScreen": {
     "prefix": "renderer.world_to_screen",
     "body": "renderer.world_to_screen(${1:x}, ${2:y}, ${3:z})",
-    "description": "syntax: renderer.world_to_screen(x, y, z)\npaint_ctx - The context passed to your 'paint' event callback\nx - Position in world space\ny - Position in world space\nz - Position in world space\nReturns screen coordinates (x, y), or nil if the world position is not visible on your screen."
+    "description": "syntax: renderer.world_to_screen(x, y, z)\nx - Position in world space\ny - Position in world space\nz - Position in world space\nReturns screen coordinates (x, y), or nil if the world position is not visible on your screen."
+  },
+  "RendererLoadSvg": {
+    "prefix": "renderer.load_svg",
+    "body": "renderer.load_svg(${1:filecontents}, ${2:width}, ${3:height})",
+    "description": "syntax: renderer.load_svg(filecontents, width, height)\nfilecontents - A table of svg data\nwidth - texture width\nheight - texture height\nReturns an integer that can be passed to renderer.texture",
+  },
+  "RendererLoadPng": {
+    "prefix": "renderer.load_png",
+    "body": "renderer.load_png(${1:filecontents}, ${2:width}, ${3:height})",
+    "description": "syntax: renderer.load_png(filecontents, width, height)\nfilecontents - A table of png data\nwidth - texture width\nheight - texture height\nReturns an integer that can be passed to renderer.texture",
+  },
+  "RendererLoadJpg": {
+    "prefix": "renderer.load_jpg",
+    "body": "renderer.load_jpg(${1:filecontents}, ${2:width}, ${3:height})",
+    "description": "syntax: renderer.load_jpg(filecontents, width, height)\nfilecontents - A table of jpg data\nwidth - texture width\nheight - texture height\nReturns an integer that can be passed to renderer.texture",
+  },
+  "RendererTexture": {
+    "prefix": "renderer.texture",
+    "body": "renderer.texture(${1:texture_id}, ${2:x}, ${3:y}, ${4:width}, ${5:height}, ${6:r}, ${7:g}, ${8:b}, ${9:a})",
+    "description": "syntax: renderer.texture(texture_id, x, y, width, height, r, g, b, a)\ntexture_id - An integer returned from renderer.load_svg, renderer.load_png or renderer.load_jpg\nx - X position on the screen\ny - Y position on the screen\nwidth - Texture width\nheight - Texture height\nr - Red\ng - Green\nb - Blue\na - Alpha",
+  },
+  "RendererTriangle": {
+    "prefix": "renderer.triangle",
+    "body": "renderer.triangle(${1:x0}, ${2:y0}, ${3:x1}, ${4:y1}, ${5:x2}, ${6:y2}, ${7:r}, ${8:g}, ${9:b}, ${10:a})",
+    "description": "syntax: renderer.triangle(x0, y0, x1, y1, x2, y2, r, g, b, a)\nx0 - Screen coordinate X for point A\ny0 - Screen coordinate Y for point A\nx1 - Screen coordinate X for point B\ny1 - Screen coordinate Y for point B\nx2 - Screen coordinate X for point C\ny2 - Screen coordinate Y for point C\nr - Red (1-255)\ng - Green (1-255)\nb - Blue (1-255)\na - Alpha (1-255)\nThis can only be called from the paint callback."
+  },
+
+  "FONTFLAG_ITALIC": {
+    "prefix": "fontflag.italic",
+    "body": "0x001",
+    "description": "italic font"
+  },
+  "FONTFLAG_UNDERLINE": {
+    "prefix": "fontflag.underline",
+    "body": "0x002",
+    "description": "underline font"
+  },
+  "FONTFLAG_STRIKEOUT": {
+    "prefix": "fontflag.strikeout",
+    "body": "0x004",
+    "description": "strikeout font"
+  },
+  "FONTFLAG_SYMBOL": {
+    "prefix": "fontflag.symbol",
+    "body": "0x008",
+    "description": "symbol font"
+  },
+  "FONTFLAG_ANTIALIAS": {
+    "prefix": "fontflag.antialias",
+    "body": "0x010",
+    "description": "antialias font"
+  },
+  "FONTFLAG_GAUSSIANBLUR": {
+    "prefix": "fontflag.guassianblur",
+    "body": "0x020",
+    "description": "blurry font"
+  },
+  "FONTFLAG_ROTARY": {
+    "prefix": "fontflag.rotary",
+    "body": "0x040",
+    "description": "rotary font"
+  },
+  "FONTFLAG_DROPSHADOW": {
+    "prefix": "fontflag.dropshadow",
+    "body": "0x080",
+    "description": "shadow font"
+  },
+  "FONTFLAG_ADDITIVE": {
+    "prefix": "fontflag.additive",
+    "body": "0x100",
+    "description": "additive font"
+  },
+  "FONTFLAG_OUTLINE": {
+    "prefix": "fontflag.outline",
+    "body": "0x200",
+    "description": "outline font"
+  },
+  "FONTFLAG_CUSTOM": {
+    "prefix": "fontflag.custom",
+    "body": "0x400",
+    "description": "custom generated font"
+  },
+  "FONTFLAG_BITMAP": {
+    "prefix": "fontflag.bitmap",
+    "body": "0x800",
+    "description": "compiled bitmap font"
+  },
+  "Custom_RendererCreateFont": {
+    "prefix": "renderer.create_font",
+    "body": "renderer.create_font(${1:windows_font_name}, ${2:tall}, ${3:weight}, ${4:flags})",
+    "description": "syntax: renderer.create_font(windows_font_name, tall, weight, flags)\nwindows_font_name - Windows font name, only supports .ttf.\ntall - Font size.\nweight - Font weight.\nflags - Text flags\nReturns a special value that can be passed to draw_text, draw_localized_string, test_font and get_text_size"
+  },
+  "Custom_RendererDrawText": {
+    "prefix": "renderer.draw_text",
+    "body": "renderer.draw_text(${1:x}, ${2:y}, ${3:r}, ${4:g}, ${5:b}, ${6:a}, ${7:font}, ${8:text})",
+    "description": "syntax: renderer.draw_text(x, y, r, g, b, a, font, text)\nx - Screen coordinate\ny - Screen coordinate\nr - Red (1-255)\ng - Green (1-255)\nb - Blue (1-255)\na - Alpha (1-255)\nfont - Returned value of renderer.create_font\ntext - Text that will be drawn"
+  },
+  "Custom_RendererDrawLocalizedText": {
+    "prefix": "renderer.draw_localized_text",
+    "body": "renderer.draw_localized_text(${1:x}, ${2:y}, ${3:r}, ${4:g}, ${5:b}, ${6:a}, ${7:font}, ${8:text})",
+    "description": "syntax: renderer.draw_localized_text(x, y, r, g, b, a, font, text)\nx - Screen coordinate\ny - Screen coordinate\nr - Red (1-255)\ng - Green (1-255)\nb - Blue (1-255)\na - Alpha (1-255)\nfont - Returned value of renderer.create_font\ntext - #SFUI_ or other localized strings that will be drawn"
+  },
+  "Custom_RendererDrawLine": {
+    "prefix": "renderer.draw_line",
+    "body": "renderer.draw_line(${1:x0}, ${2:y0}, ${3:x1}, ${4:y1}, ${5:r}, ${6:g}, ${7:b}, ${8:a})",
+    "description": "syntax: renderer.draw_line(x0, y0, x1, y1, r, g, b, a)\nx0 - Screen coordinate of point A\ny0 - Screen coordinate of point A\nx1 - Screen coordinate of point B\ny1 - Screen coordinate of point B\nr - Red (1-255)\ng - Green (1-255)\nb - Blue (1-255)\na - Alpha (1-255)"
+  },
+  "Custom_RendererDrawFilledRectangle": {
+    "prefix": "renderer.draw_filled_rect",
+    "body": "renderer.draw_filled_rect(${1:x}, ${2:y}, ${3:w}, ${4:h}, ${5:r}, ${6:g}, ${7:b}, ${8:a})",
+    "description": "syntax: renderer.draw_filled_rect(x, y, w, h, r, g, b, a)\nx - Screen coordinate\ny - Screen coordinate\nw - Width in pixels\nh - Height in pixels\nr - Red (1-255)\ng - Green (1-255)\nb - Blue (1-255)\na - Alpha (1-255)"
+  },
+  "Custom_RendererDrawOutlinedRectangle": {
+    "prefix": "renderer.draw_outlined_rect",
+    "body": "renderer.draw_outlined_rect(${1:x}, ${2:y}, ${3:w}, ${4:h}, ${5:r}, ${6:g}, ${7:b}, ${8:a})",
+    "description": "syntax: renderer.draw_outlined_rect(x, y, w, h, r, g, b, a)\nx - Screen coordinate\ny - Screen coordinate\nw - Width in pixels\nh - Height in pixels\nr - Red (1-255)\ng - Green (1-255)\nb - Blue (1-255)\na - Alpha (1-255)"
+  },
+  "Custom_RendererDrawFilledOutlinedRectangle": {
+    "prefix": "renderer.draw_filled_outlined_rect",
+    "body": "renderer.draw_filled_outlined_rect(${1:x}, ${2:y}, ${3:w}, ${4:h}, ${5:r0}, ${6:g0}, ${7:b0}, ${8:a0}, ${9:r1}, ${10:g1}, ${11:b1}, ${12:a1})",
+    "description": "syntax: renderer.draw_filled_outlined_rect(x, y, w, h, r0, g0, b0, a0, r1, g1, b1, a1)\nx - Screen coordinate\ny - Screen coordinate\nw - Width in pixels\nh - Height in pixels\nr0 - Filled Red (1-255)\ng0 - Filled Green (1-255)\nb0 - Filled Blue (1-255)\na0 - Filled Alpha (1-255)\nr1 - Outline Red (1-255)\ng1 - Outline Green (1-255)\nb1 - Outline Blue (1-255)\na1 - Outline Alpha (1-255)" 
+  },
+  "Custom_RendererDrawFilledGradientRectRectangle": {
+    "prefix": "renderer.draw_filled_gradient_rect",
+    "body": "renderer.draw_filled_gradient_rect(${1:x}, ${2:y}, ${3:w}, ${4:h}, ${5:r0}, ${6:g0}, ${7:b0}, ${8:a0}, ${9:r1}, ${10:g1}, ${11:b1}, ${12:a1}, ${13:horizontal})",
+    "description": "syntax: renderer.draw_filled_gradient_rect(x, y, w, h, r0, g0, b0, a0, r1, g1, b1, a1, horizontal)\nx - Screen coordinate\ny - Screen coordinate\nw - Width in pixels\nh - Height in pixels\nr0 - Red (1-255)\ng0 - Green (1-255)\nb0 - Blue (1-255)\na0 - Alpha (1-255)\nr1 - Red (1-255)\ng1 - Green (1-255)\nb1 - Blue (1-255)\na1 - Alpha (1-255)\nhorizontal - Left to right. Pass true for horizontal gradient, or false for vertical"
+  },
+  "Custom_RendererDrawCircleOutline": {
+    "prefix": "renderer.draw_outlined_circle",
+    "body": "renderer.draw_outlined_circle(${1:x}, ${2:y}, ${3:r}, ${4:g}, ${5:b}, ${6:a}, ${7:radius}, ${10:segments})",
+    "description": "syntax: renderer.draw_outlined_circle(x, y, r, g, b, a, radius, segments)\nx - Screen coordinate\ny - Screen coordinate\nr - Red (1-255)\ng - Green (1-255)\nb - Blue (1-255)\na - Alpha (1-255)\nradius - Radius of the circle in pixels.\nsegments - How many edges the circle should have"
+  },
+  "Custom_RendererDrawPolyLine": {
+    "prefix": "renderer.draw_poly_line",
+    "body": "renderer.draw_poly_line(${1:x}, ${2:y}, ${3:r}, ${4:g}, ${5:b}, ${6:a}, ${7:count})",
+    "description": "syntax: renderer.draw_poly_line(x, y, r, g, b, a, count)\nx - Screen coordinate\ny - Screen coordinate\nr - Red (1-255)\ng - Green (1-255)\nb - Blue (1-255)\na - Alpha (1-255)"
+  },
+  "Custom_RendererTestFont": {
+    "prefix": "renderer.test_font",
+    "body": "renderer.test_font(${1:x}, ${2:y}, ${3:r}, ${4:g}, ${5:b}, ${6:a}, ${7:font})",
+    "description": "syntax: renderer.test_font(x, y, r, g, b, a, font)\nx - Screen coordinate\ny - Screen coordinate\nr - Red (1-255)\ng - Green (1-255)\nb - Blue (1-255)\na - Alpha (1-255)\nfont - Returned value of renderer.create_font"
+  },
+  "Custom_SurfaceGetMousePos": {
+    "prefix": "renderer.get_mouse_pos",
+    "body": "renderer.get_mouse_pos()",
+    "description": "syntax: renderer.get_mouse_pos\n Returns current mouse coordinates x, y"
+  },
+  "Custom_SurfaceSetMousePos": {
+    "prefix": "renderer.set_mouse_pos",
+    "body": "renderer.set_mouse_pos(${1:x}, (${2:y})",
+    "description": "syntax: renderer.set_mouse_pos\nx - Screen coordiantes\ny - Screen coordiantes"
+  },
+  "custom_RendereGetTextSize": {
+    "prefix": "renderer.get_text_size",
+    "body": "renderer.get_text_size(${1:font}, ${2:text})",
+    "description": "syntax: renderer.get_text_size(font, text)\nfont - Returned value of renderer.create_font\ntext - Text that will be measured\nReturns width, height. This can only be called from the paint callback."
+  },
+  "Custom_RendererLoadTexture": {
+    "prefix": "renderer.load_texture",
+    "body": "renderer.load_texture(${1:filename})",
+    "description": "syntax: renderer.load_texture(filename)\nfilename - .vmt file form csgo/materials\nReturns an integer that can be passed to renderer.texture",
+  },
+
+  "MaterialsSystemColorModulate": {
+    "prefix": "material:color_modulate",
+    "body": "material:color_modulate(${1:r}, ${2:g}, ${3:b})",
+    "description": "syntax: material:color_modulate(r, g, b)\nr - Red\ng - Green\nb - Blue",
+  },
+  "MaterialsSystemAlphaModulate": {
+    "prefix": "material:alpha_modulate",
+    "body": "material:alpha_modulate(${1:a})",
+    "description": "syntax: material:alpha_modulate(a)\na - Alpha",
+  },
+  "MaterialsSystemSetMaterialVarFlag": {
+    "prefix": "material:set_material_var_flag",
+    "body": "material:set_material_var_flag(${1:flag}, ${2:enabled})",
+    "description": "syntax: material:set_material_var_flag(flag, enabled)\nflag - Hex0decimal value of the flag\nenabled - Enabled status of the flag",
+  },
+  "MaterialsSystemGetShaderParam": {
+    "prefix": "material:get_shader_param",
+    "body": "material:get_shader_param(${1:shader_param})",
+    "description": "syntax: material:get_shader_param(shader_param)\nshader_param - Shader parameter\nReturns the value of the shader_parameter",
+  },
+  "MaterialsSystemSetShaderParam": {
+    "prefix": "material:set_shader_param",
+    "body": "material:set_shader_param(${1:shader_param}, ${2:value})",
+    "description": "syntax: material:set_shader_param(shader_param, value)\nshader_param - Shader parameter\nvalue - Shader parameter value",
+  },
+  "MaterialsSystemGetName": {
+    "prefix": "material:get_name",
+    "body": "material:get_name()",
+  },
+  "MaterialSystemOverrideMaterial": {
+    "prefix": "materialsystem.override_material",
+    "body": "materialsystem:override_material(${1:old_material}, ${2:new_material})",
+    "description": "syntax: materialsystem:override_material(old_material, new_material)\nold_material - Old material to override\nnew_material - New material",
+  },
+  "MaterialSystemGetModelMaterials": {
+    "prefix": "materialsystem.get_model_materials",
+    "body": "materialsystem:get_model_materials(${1:entindex})",
+    "description": "syntax: materialsystem:get_model_materials(entindex)\nentindex - entity index",
+  },
+  "MaterialSystemFindmaterial": {
+    "prefix": "materialsystem.find_material",
+    "body": "materialsystem:find_material(${1:material}, ${2:unk_bool})",
+    "description": "syntax: materialsystem:find_material(material, unk_bool)\nmaterial\nunk_bool",
   },
 }
